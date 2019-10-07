@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Chat Toxicity Predictor</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+</head>
+<body>
+    <style>
+        body{
+            background-color: #E0E0E0;
+        }  
+    </style>
+    <div>
+        <div>
+            <div style="padding-top: 20px">
+                <center>
+                    <img src="static/images/biohazard.png" alt="Logo" width="100" height="100">
+                    <br>
+                    <br>
+                    <h1>Chat Toxicity Classifier</h1>
+                </center>
+            </div>
+            <form action="/result" method="POST">
+                <div style="padding-top: 30px">
+                    <center>
+                        <label>Enter a word or a phrase to get the toxicity level</label>
+                        <input required align="center" class="form-control col-lg-8" name="data" type="text" autofocus="autofocus" maxlength="500">
+                        <p style="text-align:right;padding-right: 260px"><font size="1.5">Upto 500 characters allowed</font></p>
+                        <input align="center" class="btn btn-primary" type="submit" value="Submit">
+                    </center>
+                </div>
+            </form>
+        </div>
+        <div class="left" style="padding-top: 20px; padding-left: 100px; padding-right: 100px; float: left">
+            <h2>Entered word/phrase</h2>
+            <br>
+            {% if hasOutput %}
+                <h3>{{data}}</h3>
+            {% endif %}
+        </div>
+        <div class="right" style="padding-top: 20px; padding-right: 100px; float: right">
+            <canvas id="myChart" width="800" height="350"></canvas>
+            <script>
+                Chart.defaults.global.defaultFontFamily='Lato';
+                let myChart = document.getElementById("myChart").getContext("2d");
+                let barChart = new Chart(myChart, {
+                    type: 'horizontalBar',
+                    data: {
+                        labels:['Toxic','Severe Toxic','Obscene','Threat','Insult','Identity Hate'],
+                        datasets:[{
+                            label:'Toxicity Levels in Percentage',
+                            data:['{% if hasOutput %} {{ predictions[0]*100 }} {% else %} {{ 0 }} {% endif %}', '{% if hasOutput %} {{ predictions[1]*100 }} {% else %} {{ 0 }} {% endif %}', '{% if hasOutput %} {{ predictions[2]*100 }} {% else %} {{ 0 }} {% endif %}', '{% if hasOutput %} {{ predictions[3]*100 }} {% else %} {{ 0 }} {% endif %}', '{% if hasOutput %} {{ predictions[4]*100 }} {% else %} {{ 0 }} {% endif %}', '{% if hasOutput %} {{ predictions[5]*100 }} {% else %} {{ 0 }} {% endif %}'],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.6)',
+                                'rgba(54, 162, 235, 0.6)',
+                                'rgba(255, 206, 86, 0.6)',
+                                'rgba(75, 192, 192, 0.6)',
+                                'rgba(153, 102, 255, 0.6)',
+                                'rgba(255, 159, 64, 0.6)'
+                             ],
+                             borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1,
+                            hoverBorderWidth: 3,
+                            hoverBorderColor: '#000',
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                barPercentage: 0.5,
+                                barThickness: 0.1,
+                                gridLines: {
+                                    display: false
+                                }
+                            }],
+                            yAxes: [{
+                                gridLines: {
+                                    display: false
+                                }
+                            }]
+                        },
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Toxicity Levels of the Chat (in percentage)',
+                            fontSize: '18'
+                        },
+                        responsive: false
+                    }
+                });
+            </script>
+        </div>
+    </div>
+</body>
+</html>
