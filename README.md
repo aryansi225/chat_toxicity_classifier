@@ -25,5 +25,5 @@ LIVE DEMO HERE -> https://chattoxicity.appspot.com/
 # Dependencies
 Flask, Tensorflow, Keras
 
-# Credit
+# References
 https://www.kaggle.com/jhoward/improved-lstm-baseline-glove-dropout?sortBy=relevance&group=everyone&search=toxic+comment+&page=1&pageSize=20&turbolinks%5BrestorationIdentifier%5D=e88bae67-bc31-400d-a502-053b547cb912
