@@ -27,3 +27,15 @@ Flask, Tensorflow, Keras
 
 # References
 https://www.kaggle.com/jhoward/improved-lstm-baseline-glove-dropout?sortBy=relevance&group=everyone&search=toxic+comment+&page=1&pageSize=20&turbolinks%5BrestorationIdentifier%5D=e88bae67-bc31-400d-a502-053b547cb912
+
+# My Original Contribution & Learnings
+
+Contribution =>
+Reimplemented the code after understanding the above kaggle kernel mentioned in the reference.
+Used the generated model in a flask application which was built so that prediction for an input can be made interactive.
+Deployed on GCP using App Engine.
+
+Major Learnings => 
+Learnt how to use transfer learning using Glove.
+Learnt how to built Flask application and serve a saved keras model.
+Learnt how to deploy on GCP using App Engine.
